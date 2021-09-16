@@ -1,0 +1,8 @@
+from datetime import datetime
+
+student = ('Иван Питонов', 2001, [8, 7, 7, 9, 6], True)
+print('Студент:', student[0][4:12], student[0][0:4])
+if datetime.now().year == 2020:
+    print(datetime.now().year - 2001)
+print()
+
