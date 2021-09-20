@@ -1,8 +1,81 @@
 from datetime import datetime
-
+# ЗАДАНИЕ 1
 student = ('Иван Питонов', 2001, [8, 7, 7, 9, 6], True)
-print('Студент:', student[0][4:12], student[0][0:4])
-if datetime.now().year == 2020:
-    print(datetime.now().year - 2001)
-print()
+print('Студент:', student[0][4:12], student[0][0:4])  #Выведите фамилию и имя Ивана в формате "Студент: {Фамилия}, {Имя}"
+if datetime.now().year == 2021:
+    print(datetime.now().year - 2001)  #Выведите возраст Ивана, если сейчас 2020 год.(допускаю, тут имелось в виду 2021)
+print(student[2])  #Напечатайте оценки Ивана через запятую.
+aver = sum(student[2])/len(student[2])
+print(aver)  #Найдите средний балл Ивана, если оценки хранятся в списке внутри кортежа.
+# Сумму элементов списка можно найти с помощью функции sum(). Выведите средний балл.
+if aver >= 8:  #Если средняя оценка Ивана больше или равна 8, то он получает повышенную стипендию. Выведите True или False.
+    print(True)
+else:
+    print(False)
+# ЗАДАНИЕ 2
+numbers = [1, 1000, 1002124, 25, 10, 20, 351]
+numbers_int_sorted = sorted(numbers)
+numbers_str = list(map(str,numbers))
+numbers_str_sorted =sorted(numbers_str)
+numbers_str_key_sorted = sorted(numbers_str,key=int)
+print(numbers_int_sorted)
+print(numbers_str_sorted)
+print(numbers_str_key_sorted)
+# Отсортированные числовые списки одинаковы, тк key указывает что к тексту для сортировки будет применена функция перевода в число int
+# ЗАДАНИЕ 3
+num = ('1 2 3 2 1')
+num.replace(' ',',')
+un_num = list(set(num))
+print(len(un_num)-1)
+
+num = ('1 2 3 4 5 1 2 1 2 7 3')
+num.replace(' ',',')
+un_num = list(set(num))
+print(len(un_num)-1)
+# ЗАДАНИЕ 4
+s1 = ('математика немецкий право')
+s2 = ('математика немецкий')
+s3 = ('немецкий право математика')
+s1 = set(s1.split())
+s2 = set(s2.split())
+s3 = set(s3.split())
+intersect = set.intersection(s1 & s2 & s3)
+print(len(intersect))
+# ЗАДАНИЕ 4.1
+s1 = ('математика немецкий право')
+s2 = ('математика английский')
+s3 = ('право')
+s1 = set(s1.split())
+s2 = set(s2.split())
+s3 = set(s3.split())
+intersect = (s1 | s2) - s3
+print(len(intersect))
+# ЗАДАНИЕ 5
+dict_of_lists = {'Список1': [{'Python': 'язык программирования'}, {'R':'язык программирования', 'LaTEX' : 'язык верстки' }],
+                 'Список2' : [{'Windows' : ['операционная система', 'разработчик'], 'UNIX' : 'операционная система'},
+                              {'IBM': ['компания-производитель', 'разработчик'], 'IPv6' : 'интернет-протокол' }]}
+print(dict_of_lists['Список2'][0]['Windows'][1])
+# ЗАДАНИЕ 6
+x = 'Abrakadabra'
+print(x[2]) #1
+print(x[len(x)-2]) #2
+print(x[:5]) #3
+print(x[:len(x)-2]) #4
+print(x[::2]) #5
+print(x[1::2]) #6
+print(x[::-1]) #7
+print(x[::-1]) #7
+print(x[::-2]) #8
+print(len(x))
+# ЗАДАНИЕ 7
+dwarves = ["Балин", "Двалин", "Бифур", "Бофур",
+         "Бомбур", "Оин", "Глоин", "Дори", "Нори",
+         "Ори", "Фили", "Кили", "Торин"]
+
+print(dwarves[1:4]) #["Двалин", "Бифур", "Бофур"]
+print(dwarves[::2])#["Балин", "Бифур", "Бомбур", "Глоин", "Нори", "Фили", "Торин"]
+print(dwarves[5::2]) #["Оин", "Дори", "Ори", "Кили"]
+print(dwarves[:5:-2]) #["Торин", "Фили", "Нори", "Глоин"]
+# ЗАДАНИЕ 8 Даны три целых числа. Определите, сколько среди них совпадающих. Программа должна вывести одно из чисел: 3 (если все совпадают), 2 (если два совпадает) или 0 (если все числа различны).
+
 
