@@ -2,8 +2,7 @@
 # Задача 3
 import re
 s = '#Б#ЖУР, #Б#ЗИСКИЙ, #Б#ЗИНЫ, #ББ#Т, #ББ#ТИС#, #ББ#ТСТВО'
-# re.sub(r'[#]', 'А', s)
 print(type(s))
-x = ['A' if i == '#' else i for i in s]
+x = ['A' if i == '#' else i for i in s]  # re.sub(r'[#]', 'А', s) - вариант решения через регулярные выражения
 x=''.join(x)
 print(x)
