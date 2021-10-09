@@ -33,6 +33,24 @@ for i in range(n1, n2 + 1):
         pass
     x2 = i // 100 % 10
     x3 = i // 10 % 10
+    
     x4 = i % 10
     if x1 % 2 == 0 and x2 % 2 == 0 and x3%2 == 0 and x4%2 == 0:
         print(i)
+# Задача 3
+import requests
+from bs4 import BeautifulSoup
+link = 'https://www.worldometers.info/world-population/world-population-by-year/'
+website_url = requests.get(link).text
+soup = BeautifulSoup(website_url, 'lxml')
+soup.prettify()
+tables = soup.find_all('table'{'class':'table-hover table-condensed'})
+rows = tables[0].find_all('tr')
+
+Dates = []
+Dates.append(rows[0].find_all('th')[0].get_text().strip())
+for row in rows[0:]:
+    r = row.find_all('td')
+Dates.append(r[0].get_text().strip())
+
+print(rows[0].find_all('th')[0].get_text().strip())
