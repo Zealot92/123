@@ -1,0 +1,57 @@
+import telebot
+import requests
+import time
+from bs4 import BeautifulSoup
+import os
+from flask import Flask, request
+
+server = Flask(__name__) # куда телеграм должен слать сообщения и в каком месте мы слушаем
+PORT = int(os.environ.get('PORT', 5000))
+#https://dashboard.heroku.com/apps/gov-news-bot/settings
+
+token = "5015424661:AAHVOs9jsP8abi9QtK9I7I7TLRsi10SvvdY"  # ыВаш токен
+channel_id = "@news_disc"  # Ваш логин канала https://t.me/news_disc
+bot = telebot.TeleBot(token)
+
+
+def commands(message):
+    back_post_id = None # при первом запуске back post id = 0
+    while True:
+        post_text = parser(back_post_id)
+        back_post_id = post_text[1] # забираем post id из 2-ого аргумента функции, после ф-строки
+
+        if post_text[0] != None: # если есть, что постить (функция выполняется первым условием if) - постим
+            bot.send_message(channel_id, post_text[0]) # отправляем сообщение в бот
+            time.sleep(30) # забвение на 30 сек.
+
+
+def parser(back_post_id):
+    url = 'https://www.roszakupki.ru/news/'
+    page = requests.get(url)
+    tree = BeautifulSoup(page.content, 'html.parser')
+    post = tree.find('div',class_ = 'ev_news')
+    data = post.find('span',class_ = 'date date--big').text.strip()
+    text = post.find('p',class_ = 'ev_news_txt').text.strip()
+    post_id = data + text[:10]
+    if post_id != back_post_id:
+        return f"{data}\n\n{text}", post_id
+    else:
+        return None, post_id
+
+@server.route('/'+ token, methods = ['POST']) # обработчик, который говорит, что пришло обновление
+# и преобразуем из его из json  в текст
+def getMessage():
+    bot.process_new_updates([telebot.types.Update.de_json(requests.stream.read().decode('utf-8'))])
+    return '!', 200
+
+@server.route("/")
+def webhook():
+    bot.remove_webhook()
+    bot.set_webhook(url='https://gov-news-bot.herokuapp.com/' + token)
+    return "!", 200
+
+
+if __name__ == 'main': # в определенном месте (установленном host и port) слушаем сообщение, которые преобразуются
+    # через server route, о
+    server.run(host = '0.0.0.0', port = int(os.environ.get('PORT', 5000))) # host = '0.0.0.0' обзначает что с любого
+    # ip сообщение будет принято по дефолту,
