@@ -1,0 +1,13 @@
+SELECT class, count(class) Sunks
+FROM Ships s INNER JOIN
+Outcomes o ON
+s.name = o.ship
+where result = 'sunk'
+GROUP BY class
+UNION
+SELECT class, count(class) Sunks
+FROM Classes c INNER JOIN
+Outcomes o ON
+c.class = o.ship
+where result = 'sunk'
+GROUP BY class
